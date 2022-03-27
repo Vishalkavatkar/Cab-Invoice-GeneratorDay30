@@ -1,5 +1,6 @@
 import org.junit.*;
 
+import com.Day30TDD.Invoice;
 import com.Day30TDD.InvoiceGenerator;
 import com.Day30TDD.Ride;
 
@@ -11,6 +12,7 @@ import com.Day30TDD.Ride;
  */
 public class InvoiceTest {
 	InvoiceGenerator invoice;
+	
 	@Before 
 	public void initialization() {
 		invoice = new InvoiceGenerator();
@@ -40,9 +42,21 @@ public class InvoiceTest {
 	 * Test case to test multiple rides.
 	 */
 	@Test
+	public void testInvoice_multipleRides() {
+		
+		Ride [] rides = {new Ride(0.1, 2), new Ride(10, 3)};
+		//Assert.assertEquals(108, invoice.generateInvoice(rides), 0.0);
+	}
+	
+	/**
+	 * Test case to check total ride, fare and average fare.
+	 */
+	@Test
 	public void testGenerateInvoice_multipleRides() {
 		
 		Ride [] rides = {new Ride(0.1, 2), new Ride(10, 3)};
-		Assert.assertEquals(108, invoice.generateInvoice(rides), 0.0);
+		Invoice invoices = new Invoice(2, 108, 54);
+		
+		Assert.assertEquals(invoices, invoice.generateInvoice(rides));
 	}
 }
