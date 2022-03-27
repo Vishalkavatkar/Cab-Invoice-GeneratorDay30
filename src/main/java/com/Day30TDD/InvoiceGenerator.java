@@ -1,5 +1,8 @@
 package com.Day30TDD;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class for invoice manipulation.
  */
@@ -30,5 +33,21 @@ public class InvoiceGenerator {
 		}
 		return new Invoice(rides.length, totalFare, totalFare / rides.length);
 
+	}
+	
+	/**
+	 *  Method to check user rides and generate invoice
+	 * @param i - user
+	 * @param rideRepo - to store the rides.
+	 * @return - fare.
+	 */
+	public Invoice generateInvoice(int i, HashMap<Integer, Ride[]> rideRepo) {
+
+		for (Map.Entry<Integer, Ride[]> rideEntry : rideRepo.entrySet()) {
+			if (rideEntry.getKey() == i)
+				return generateInvoice(rideEntry.getValue());
+		}
+
+		return null;
 	}
 }

@@ -26,7 +26,7 @@ public class Invoice {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (getClass() != obj.getClass()) 
 			return false;
 		Invoice other = (Invoice) obj;
 		return Double.doubleToLongBits(avgFare) == Double.doubleToLongBits(other.avgFare)

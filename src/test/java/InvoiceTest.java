@@ -1,21 +1,29 @@
 import org.junit.*;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import com.Day30TDD.Invoice;
 import com.Day30TDD.InvoiceGenerator;
 import com.Day30TDD.Ride;
+import com.Day30TDD.RideRepository;
 
 
 /**
  * In this we have written the test cases for our program
  * We are using the TDD approach here.
- *  @Before annotation are run before each test. This is useful when we want to execute some common code before running a test.
+ *  @Before annotation are run before each test. This is useful when we want to execute some common code before running a test.	
  */
 public class InvoiceTest {
 	InvoiceGenerator invoice;
+	RideRepository rideRepository = new RideRepository();
+	HashMap<Integer, Ride[]> rideRepo;
 	
 	@Before 
 	public void initialization() {
 		invoice = new InvoiceGenerator();
+		rideRepo = rideRepository.getRideRepo();
 	}
 	
 	/**
@@ -57,6 +65,27 @@ public class InvoiceTest {
 		Ride [] rides = {new Ride(0.1, 2), new Ride(10, 3)};
 		Invoice invoices = new Invoice(2, 108, 54);
 		
-		Assert.assertEquals(invoices, invoice.generateInvoice(rides));
+		assertEquals(invoices, invoice.generateInvoice(rides));
 	}
+	
+	/**
+	 * Test case to check fare with user id.
+	 * We are storing each user rides and then adding it in the hash map with user it and fare. 
+	 */
+	@Test
+	public void RidesRepo_multipleRides() {
+
+		Ride[] rides1 = { new Ride(0.1, 2), new Ride(10, 3) };
+		Ride[] rides2 = { new Ride(3, 2), new Ride(1, 3), new Ride(150, 300) };
+		Ride[] rides3 = { new Ride(5, 7) };
+
+		rideRepo.put(1, rides1);
+		rideRepo.put(2, rides2);
+		rideRepo.put(3, rides3);
+
+		Invoice invoices = new Invoice(3, 1845, 615);
+
+		assertEquals(invoices, invoice.generateInvoice(2, rideRepo));
+	}
+
 }
